@@ -14,3 +14,5 @@ p_lejeune_media :
         width : 440
         height : 220
         min-width: 400
+  categories:
+    - logo

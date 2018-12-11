@@ -33,6 +33,10 @@ class Configuration implements ConfigurationInterface
                         ->end()
                     ->end()
                 ->end()
+            ->end()
+            ->arrayNode('categories')
+                ->arrayPrototype()
+                ->end()
             ->end();
 
         return $treeBuilder;
