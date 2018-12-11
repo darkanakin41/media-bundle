@@ -1,0 +1,32 @@
+services:
+    plejeune.media:
+        public: true
+        class: PLejeune\MediaBundle\Extension\FileExtension
+        arguments: ["@service_container"]
+        tags:
+        - { name: twig.extension }
+
+    plejeune.media.fileinfo:
+        public : true
+        class: PLejeune\MediaBundle\Service\FileInfo
+        arguments: ["@assets.packages"]
+        tags:
+            -  { name: twig.extension }
+
+    plejeune.media.fileupload:
+        public : true
+        class: PLejeune\MediaBundle\Service\FileUpload
+        arguments: [[], '%kernel.project_dir%']
+
+    plejeune.media.slugify:
+        public : true
+        class: PLejeune\MediaBundle\Service\Slugify
+        tags:
+            -  { name: twig.extension }
+
+
+    plejeune.media.command.update:
+        public: true
+        class: PLejeune\MediaBundle\Command\MediaRefreshCommand
+        tags:
+        - { name: console.command }

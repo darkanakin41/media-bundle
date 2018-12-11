@@ -1,0 +1,43 @@
+{
+  "name": "plejeune/media-bundle",
+  "type": "symfony-bundle",
+  "description": "Pierre LEJEUNE MediaBundle",
+  "keywords": [
+    "Table Bundle"
+  ],
+  "homepage": "https://gitlab.com/pierrelejeune/mediabundle",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Pierre LEJEUNE",
+      "email": "lejeune.pierre.41@gmail.com"
+    }
+  ],
+  "require": {
+    "php": "^7.0",
+    "knplabs/knp-paginator-bundle": "dev-master",
+    "symfony/form": "*",
+    "symfony/framework-bundle": "*",
+    "symfony/orm-pack": "*",
+    "symfony/translation": "*",
+    "symfony/twig-bundle": "*",
+    "symfony/validator": "*",
+    "symfony/yaml": "*"
+  },
+  "config": {
+    "sort-packages": true
+  },
+  "extra": {
+    "branch-alias": {
+      "dev-master": "1.0"
+    }
+  },
+  "autoload": {
+    "psr-4": {
+      "PLejeune\\MediaBundle\\": ""
+    },
+    "exclude-from-classmap": [
+      "/Tests/"
+    ]
+  }
+}

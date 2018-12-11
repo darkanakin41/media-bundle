@@ -1,0 +1,16 @@
+p_lejeune_media :
+  storage_folder : '%kernel.project_dir%/public/media/'
+  image_formats :
+    banner:
+      large :
+        width : 1200
+        height : 600
+        min-width : 1100
+      normal :
+        width : 880
+        height : 440
+        min-width: 800
+      small :
+        width : 440
+        height : 220
+        min-width: 400

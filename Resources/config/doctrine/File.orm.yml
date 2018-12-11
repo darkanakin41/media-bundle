@@ -1,0 +1,45 @@
+PLejeune\MediaBundle\Entity\File:
+    type: entity
+    table: null
+    repositoryClass: PLejeune\MediaBundle\Repository\FileRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        filepath:
+            type: string
+            length: 255
+            nullable : false
+        filename:
+            type: string
+            length: 255
+            nullable : false
+        filetype:
+            type: string
+            length: 255
+            nullable : false
+        filesize:
+            type: string
+            length: 255
+            nullable : false
+        category:
+            type: string
+            length: 255
+        copyright:
+            type: string
+            length: 255
+            nullable : true
+        date :
+            type : datetime
+            nullable : false
+    manyToOne :
+        user :
+            targetEntity: PLejeune\UserBundle\Entity\User
+            nullable : false
+            joinColumn:
+                name: user_id
+                referencedColumnName: id
+    lifecycleCallbacks: {  }
