@@ -35,7 +35,7 @@ class Configuration implements ConfigurationInterface
                 ->end()
             ->end()
             ->arrayNode('categories')
-                ->arrayPrototype()
+                ->scalarPrototype()
                 ->end()
             ->end();
 
