@@ -18,12 +18,6 @@ services:
         class: PLejeune\MediaBundle\Service\FileUpload
         arguments: [[], '%kernel.project_dir%']
 
-    plejeune.media.slugify:
-        public : true
-        class: PLejeune\MediaBundle\Service\Slugify
-        tags:
-            -  { name: twig.extension }
-
 
     plejeune.media.command.update:
         public: true

@@ -5,9 +5,7 @@ namespace PLejeune\MediaBundle\Service;
 use PLejeune\MediaBundle\Entity\File;
 use PLejeune\MediaBundle\Tools\File as ToolFile;
 use PLejeune\MediaBundle\Tools\FileTools;
-use PLejeune\MediaBundle\Tools\Slugify;
-use Symfony\Bridge\Twig\Extension\AssetExtension;
-use Symfony\Bundle\FrameworkBundle\Templating\Helper\AssetsHelper;
+use PLejeune\CoreBundle\Tools\Slugify;
 use Symfony\Component\Asset\Packages;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 

@@ -5,7 +5,7 @@ namespace PLejeune\MediaBundle\Service;
 use PLejeune\MediaBundle\Entity\File;
 use PLejeune\MediaBundle\Tools\ResizeImage;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
-use PLejeune\MediaBundle\Tools\Slugify;
+use PLejeune\CoreBundle\Tools\Slugify;
 
 class FileUpload
 {

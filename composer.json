@@ -3,7 +3,7 @@
   "type": "symfony-bundle",
   "description": "Pierre LEJEUNE MediaBundle",
   "keywords": [
-    "Table Bundle"
+    "Media Bundle"
   ],
   "homepage": "https://gitlab.com/pierrelejeune/mediabundle",
   "license": "MIT",
@@ -16,6 +16,7 @@
   "require": {
     "php": "^7.0",
     "knplabs/knp-paginator-bundle": "dev-master",
+    "plejeune/core-bundle": "dev-master",
     "symfony/form": "*",
     "symfony/framework-bundle": "*",
     "symfony/orm-pack": "*",
