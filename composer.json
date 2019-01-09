@@ -17,6 +17,7 @@
     "php": "^7.0",
     "knplabs/knp-paginator-bundle": "dev-master",
     "plejeune/core-bundle": "dev-master",
+    "symfony/asset": "*",
     "symfony/form": "*",
     "symfony/framework-bundle": "*",
     "symfony/orm-pack": "*",

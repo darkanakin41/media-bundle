@@ -13,7 +13,7 @@ class MediaRefreshCommand extends ContainerAwareCommand
 
     protected function configure()
     {
-        $this->setName('media:refresh');
+        $this->setName('plejeune:media:refresh');
         $this->setDescription('Rafraichit les méta des medias');
         $this->setHelp('Rafraichit les méta des medias');
     }
