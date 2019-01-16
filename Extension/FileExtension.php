@@ -40,7 +40,7 @@ class FileExtension extends \Twig_Extension
         );
     }
 
-    public function render(File $file, array $classes = [], string $title = null)
+    public function render(File $file, array $classes = [], string $title = null, $block = 'default')
     {
         if($title === null){
             $title = $file->getFilename();
@@ -53,6 +53,12 @@ class FileExtension extends \Twig_Extension
         $template = null;
         $vars = ['file' => $file, 'classes' => $classes, 'title' => $title];
         switch ($file->getFiletype()) {
+            case 'text/html':
+                $template = $this->twig->load('@PLejeuneMedia/html.html.twig');
+                break;
+            case 'text/css':
+                $template = $this->twig->load('@PLejeuneMedia/css.html.twig');
+                break;
             case 'image/jpg':
             case 'image/jpeg':
             case 'image/gif':
@@ -62,7 +68,7 @@ class FileExtension extends \Twig_Extension
                 break;
         }
         if($template !== null){
-            return $template->render($vars);
+            return $template->renderBlock($block, $vars);
         }
         return '';
     }

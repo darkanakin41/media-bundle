@@ -1,6 +1,8 @@
-<picture {% if classes is not empty %}class="{{ classes|join(' ') }}"{% endif %}>
-    {% for version in versions %}
-        <source srcset="{{ asset(version.path) }}" {% if version.minWidth is defined %}media="(min-width: {{ version.minWidth }}px)"{% endif %}>
-    {% endfor %}
-    <img src="{{ asset(file.filepath) }}" alt="{{ title }}" title="{{ title }}"/>
-</picture>
+{% block default %}
+    <picture {% if classes is not empty %}class="{{ classes|join(' ') }}"{% endif %}>
+        {% for version in versions %}
+            <source srcset="{{ asset(version.path) }}" {% if version.minWidth is defined %}media="(min-width: {{ version.minWidth }}px)"{% endif %}>
+        {% endfor %}
+        <img src="{{ asset(file.filepath) }}" alt="{{ title }}" title="{{ title }}"/>
+    </picture>
+{% endblock %}

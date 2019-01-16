@@ -55,7 +55,7 @@ class FileUpload
     public function upload(UploadedFile $file, $name = "image", $category = '')
     {
         $now = new \DateTime('now');
-        $extension = $file->guessExtension();
+        $extension = $file->getClientOriginalExtension();
         $fileName = sprintf('%s-%s.%s', Slugify::process($name), time(), $extension);
         $folder = sprintf('%s%s/%s/%s/', $this->config['storage_folder'], $category, $now->format('Y'), $now->format('m'));
         $mimeType = $file->getMimeType();
@@ -87,13 +87,6 @@ class FileUpload
         @unlink($this->calculatePath($path, self::PATH_ABSOLUTE));
     }
 
-    /**
-     * Retrieve other versions
-     *
-     * @param File $file
-     *
-     * @return array
-     */
     public function getOtherFiles(File $file){
         $mimeType = $file->getFiletype();
         $category = $file->getCategory();
@@ -109,26 +102,12 @@ class FileUpload
                     if(isset($values['min_width'])){
                         $data += ['minWidth' => $values['min_width']];
                     }
-                    $retour[$key] = $data;
+                    $retour[] = $data;
                 }
             }
         }
 
         return $retour;
-    }
-
-    /**
-     * Retrieve the version of the file if exist, otherwise, return the default one
-     *
-     * @param File $file
-     * @param string $version
-     *
-     * @return string
-     */
-    public function getVersion(File $file, $version){
-        $versions = $this->getOtherFiles($file);
-        if(in_array($version, array_keys($versions))) return $versions[$version]['path'];
-        return $file->getFilepath();
     }
 
     public function calculatePath($path, $pathType){

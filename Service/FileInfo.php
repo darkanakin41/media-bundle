@@ -12,6 +12,10 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 class FileInfo extends \Twig_Extension{
 
     CONST base_folder = "media/";
+    const EXTENSION_MAPPING = [
+        "css" => "text/css",
+        "twig" => "text/html",
+    ];
     /**
      * @var Packages
      */
@@ -55,6 +59,9 @@ class FileInfo extends \Twig_Extension{
     public function getFileType(File $file)
     {
         global $kernel;
+        $fileExploded = explode(".", $file->getFilepath());
+        $extension = array_pop($fileExploded);
+        if(in_array($extension, array_keys(self::EXTENSION_MAPPING))) return self::EXTENSION_MAPPING[$extension];
         return mime_content_type($kernel->getProjectDir() . '/public/' . $file->getFilepath());
     }
 
