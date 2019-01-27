@@ -118,4 +118,20 @@ class FileUpload
         }
         return $path;
     }
+
+    /**
+     * Retrieve the version of the file if exist, otherwise, return the default one
+     *
+     * @param File $file
+     * @param string $version
+     *
+     * @return string
+     */
+    public function getVersion(File $file, $version){
+        $versions = $this->getOtherFiles($file);
+        if(in_array($version, array_keys($versions))) return $versions[$version]['path'];
+        return $file->getFilepath();
+    }
+
+
 }
