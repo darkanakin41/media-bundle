@@ -102,7 +102,7 @@ class FileUpload
                     if(isset($values['min_width'])){
                         $data += ['minWidth' => $values['min_width']];
                     }
-                    $retour[] = $data;
+                    $retour[$key] = $data;
                 }
             }
         }
