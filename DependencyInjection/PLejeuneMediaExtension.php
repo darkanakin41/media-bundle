@@ -3,6 +3,7 @@
 namespace PLejeune\MediaBundle\DependencyInjection;
 
 
+use PLejeune\MediaBundle\Service\FileUpload;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Extension\Extension;
@@ -12,14 +13,14 @@ class PLejeuneMediaExtension extends Extension
 {
     public function load(array $configs, ContainerBuilder $container)
     {
-        $loader = new YamlFileLoader($container,new FileLocator(__DIR__.'/../Resources/config'));
+        $loader = new YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yaml');
 
         $configuration = new Configuration();
         $processedConfig = $this->processConfiguration($configuration, $configs);
 
-        $container->setParameter('plejeune.media.config',$processedConfig);
-        $definition = $container->getDefinition('plejeune.media.fileupload');
+        $container->setParameter('plejeune.media.config', $processedConfig);
+        $definition = $container->getDefinition(FileUpload::class);
         $definition->replaceArgument(0, $processedConfig);
     }
 

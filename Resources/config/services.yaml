@@ -4,7 +4,7 @@ services:
         class: PLejeune\MediaBundle\Extension\FileExtension
         arguments: ["@service_container"]
         tags:
-        - { name: twig.extension }
+            - { name: twig.extension }
 
     plejeune.media.fileinfo:
         public : true
@@ -13,14 +13,16 @@ services:
         tags:
             -  { name: twig.extension }
 
-    plejeune.media.fileupload:
-        public : true
+    PLejeune\MediaBundle\Service\FileUpload:
         class: PLejeune\MediaBundle\Service\FileUpload
         arguments: [[], '%kernel.project_dir%']
-
+        public : true
+    plejeune.media.fileupload:
+        alias: PLejeune\MediaBundle\Service\FileUpload
+        public: true
 
     plejeune.media.command.update:
         public: true
         class: PLejeune\MediaBundle\Command\MediaRefreshCommand
         tags:
-        - { name: console.command }
+            - { name: console.command }
