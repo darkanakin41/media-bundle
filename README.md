@@ -12,3 +12,5 @@ It have functions to :
 Stuff that i may do in a more or less near future ...
 * Create the documentation 
 * Create some unit tests and setup a pipeline ?
+* Move to MappedSuperClass for entities
+
