@@ -3,7 +3,8 @@
   "type": "symfony-bundle",
   "description": "Pierre LEJEUNE MediaBundle",
   "keywords": [
-    "Media Bundle",
+    "media",
+    "image",
     "symfony",
     "bundle"
   ],
