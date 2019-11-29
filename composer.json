@@ -17,13 +17,11 @@
   ],
   "require": {
     "php": "^7.0",
-    "knplabs/knp-paginator-bundle": "dev-master",
     "darkanakin41/core-bundle": "dev-master",
     "symfony/asset": "*",
     "symfony/form": "*",
     "symfony/framework-bundle": "*",
     "symfony/orm-pack": "*",
-    "symfony/translation": "*",
     "symfony/twig-bundle": "*",
     "symfony/validator": "*",
     "symfony/yaml": "*"
