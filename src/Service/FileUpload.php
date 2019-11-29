@@ -1,11 +1,11 @@
 <?php
 
-namespace PLejeune\MediaBundle\Service;
+namespace Darkanakin41\MediaBundle\Service;
 
-use PLejeune\MediaBundle\Entity\File;
-use PLejeune\MediaBundle\Tools\ResizeImage;
+use Darkanakin41\MediaBundle\Entity\File;
+use Darkanakin41\MediaBundle\Tools\ResizeImage;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
-use PLejeune\CoreBundle\Tools\Slugify;
+use Darkanakin41\CoreBundle\Tools\Slugify;
 
 class FileUpload
 {

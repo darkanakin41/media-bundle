@@ -1,11 +1,11 @@
 <?php
 
-namespace PLejeune\MediaBundle\Service;
+namespace Darkanakin41\MediaBundle\Service;
 
-use PLejeune\MediaBundle\Entity\File;
-use PLejeune\MediaBundle\Tools\File as ToolFile;
-use PLejeune\MediaBundle\Tools\FileTools;
-use PLejeune\CoreBundle\Tools\Slugify;
+use Darkanakin41\MediaBundle\Entity\File;
+use Darkanakin41\MediaBundle\Tools\File as ToolFile;
+use Darkanakin41\MediaBundle\Tools\FileTools;
+use Darkanakin41\CoreBundle\Tools\Slugify;
 use Symfony\Component\Asset\Packages;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 

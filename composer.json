@@ -1,22 +1,24 @@
 {
-  "name": "plejeune/media-bundle",
+  "name": "darkanakin41/media-bundle",
   "type": "symfony-bundle",
   "description": "Pierre LEJEUNE MediaBundle",
   "keywords": [
-    "Media Bundle"
+    "Media Bundle",
+    "symfony",
+    "bundle"
   ],
-  "homepage": "https://gitlab.com/pierrelejeune/mediabundle",
+  "homepage": "https://github.com/darkanakin41/mediabundle",
   "license": "MIT",
   "authors": [
     {
       "name": "Pierre LEJEUNE",
-      "email": "lejeune.pierre.41@gmail.com"
+      "email": "darkanakin41@gmail.com"
     }
   ],
   "require": {
     "php": "^7.0",
     "knplabs/knp-paginator-bundle": "dev-master",
-    "plejeune/core-bundle": "dev-master",
+    "darkanakin41/core-bundle": "dev-master",
     "symfony/asset": "*",
     "symfony/form": "*",
     "symfony/framework-bundle": "*",
@@ -29,17 +31,14 @@
   "config": {
     "sort-packages": true
   },
-  "extra": {
-    "branch-alias": {
-      "dev-master": "1.0"
-    }
-  },
   "autoload": {
     "psr-4": {
-      "PLejeune\\MediaBundle\\": ""
-    },
-    "exclude-from-classmap": [
-      "/Tests/"
-    ]
+      "Darkanakin41\\MediaBundle\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Darkanakin41\\MediaBundle\\Tests\\": "tests/"
+    }
   }
 }

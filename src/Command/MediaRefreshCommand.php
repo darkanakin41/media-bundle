@@ -1,9 +1,9 @@
 <?php
 
-namespace PLejeune\MediaBundle\Command;
+namespace Darkanakin41\MediaBundle\Command;
 
-use PLejeune\MediaBundle\Entity\File;
-use PLejeune\MediaBundle\Repository\FileRepository;
+use Darkanakin41\MediaBundle\Entity\File;
+use Darkanakin41\MediaBundle\Repository\FileRepository;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -13,7 +13,7 @@ class MediaRefreshCommand extends ContainerAwareCommand
 
     protected function configure()
     {
-        $this->setName('plejeune:media:refresh');
+        $this->setName('Darkanakin41:media:refresh');
         $this->setDescription('Rafraichit les méta des medias');
         $this->setHelp('Rafraichit les méta des medias');
     }
@@ -32,7 +32,7 @@ class MediaRefreshCommand extends ContainerAwareCommand
         $i = 0;
         foreach ($files as $file) {
             $output->writeln(sprintf("%d/%d : Mise a jour de media", $i++, count($files)));
-            $this->getContainer()->get('plejeune.media.fileinfo')->refresh($file);
+            $this->getContainer()->get('Darkanakin41.media.fileinfo')->refresh($file);
             $doctrine->getManager()->flush();
         }
     }

@@ -1,7 +1,7 @@
-PLejeune\MediaBundle\Entity\File:
+Darkanakin41\MediaBundle\Entity\File:
     type: entity
     table: null
-    repositoryClass: PLejeune\MediaBundle\Repository\FileRepository
+    repositoryClass: Darkanakin41\MediaBundle\Repository\FileRepository
     id:
         id:
             type: integer
@@ -37,7 +37,7 @@ PLejeune\MediaBundle\Entity\File:
             nullable : false
     manyToOne :
         user :
-            targetEntity: PLejeune\UserBundle\Entity\User
+            targetEntity: Darkanakin41\UserBundle\Entity\User
             nullable : false
             joinColumn:
                 name: user_id

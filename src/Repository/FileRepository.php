@@ -1,6 +1,6 @@
 <?php
 
-namespace PLejeune\MediaBundle\Repository;
+namespace Darkanakin41\MediaBundle\Repository;
 
 /**
  * FileRepository

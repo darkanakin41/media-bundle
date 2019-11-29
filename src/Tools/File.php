@@ -1,5 +1,5 @@
 <?php
-namespace PLejeune\MediaBundle\Tools;
+namespace Darkanakin41\MediaBundle\Tools;
 
 /*
  * To change this template, choose Tools | Templates
@@ -13,7 +13,7 @@ namespace PLejeune\MediaBundle\Tools;
  */
 class File {
     public function __construct(){}
-    
+
     private $fichier;
     public function getFichier(){
         return $this->fichier;
@@ -21,7 +21,7 @@ class File {
     public function setFichier($fichier){
         $this->fichier = $fichier;
     }
-    
+
     private $file;
     public function getFile(){
         return $this->file;
@@ -29,7 +29,7 @@ class File {
     public function setFile($fichier){
         $this->file = $fichier;
     }
-    
+
     private $folder;
     public function getFolder(){
         return $this->folder;
@@ -37,7 +37,7 @@ class File {
     public function setFolder($folder){
         $this->folder = $folder;
     }
-    
+
 }
 
 ?>

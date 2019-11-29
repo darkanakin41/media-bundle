@@ -1,6 +1,6 @@
 <?php
 
-namespace PLejeune\MediaBundle\Tools;
+namespace Darkanakin41\MediaBundle\Tools;
 
 
 use Exception;

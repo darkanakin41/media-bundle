@@ -1,0 +1,28 @@
+services:
+    darkanakin41.media:
+        public: true
+        class: Darkanakin41\MediaBundle\Extension\FileExtension
+        arguments: ["@service_container"]
+        tags:
+            - { name: twig.extension }
+
+    darkanakin41.media.fileinfo:
+        public : true
+        class: Darkanakin41\MediaBundle\Service\FileInfo
+        arguments: ["@assets.packages"]
+        tags:
+            -  { name: twig.extension }
+
+    Darkanakin41\MediaBundle\Service\FileUpload:
+        class: Darkanakin41\MediaBundle\Service\FileUpload
+        arguments: [[], '%kernel.project_dir%']
+        public : true
+    darkanakin41.media.fileupload:
+        alias: Darkanakin41\MediaBundle\Service\FileUpload
+        public: true
+
+    darkanakin41.media.command.update:
+        public: true
+        class: Darkanakin41\MediaBundle\Command\MediaRefreshCommand
+        tags:
+            - { name: console.command }

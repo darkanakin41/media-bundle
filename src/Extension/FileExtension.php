@@ -1,9 +1,9 @@
 <?php
 
-namespace PLejeune\MediaBundle\Extension;
+namespace Darkanakin41\MediaBundle\Extension;
 
 
-use PLejeune\MediaBundle\Entity\File;
+use Darkanakin41\MediaBundle\Entity\File;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class FileExtension extends \Twig_Extension
@@ -17,7 +17,7 @@ class FileExtension extends \Twig_Extension
      */
     private $twig;
     /**
-     * @var \PLejeune\MediaBundle\Service\FileUpload
+     * @var \Darkanakin41\MediaBundle\Service\FileUpload
      */
     private $fileUpload;
 
@@ -25,7 +25,7 @@ class FileExtension extends \Twig_Extension
     {
         $this->container = $container;
         $this->twig = $container->get('twig');
-        $this->fileUpload = $container->get('plejeune.media.fileupload');
+        $this->fileUpload = $container->get('Darkanakin41.media.fileupload');
     }
 
     public function getFilters()
@@ -46,7 +46,7 @@ class FileExtension extends \Twig_Extension
             $title = $file->getFilename();
         }
         if(empty($file->getFiletype())){
-            $this->container->get('plejeune.media.fileinfo')->refresh($file);
+            $this->container->get('Darkanakin41.media.fileinfo')->refresh($file);
             $this->container->get('doctrine')->getManager()->persist($file);
             $this->container->get('doctrine')->getManager()->flush();
         }
@@ -54,16 +54,16 @@ class FileExtension extends \Twig_Extension
         $vars = ['file' => $file, 'classes' => $classes, 'title' => $title];
         switch ($file->getFiletype()) {
             case 'text/html':
-                $template = $this->twig->load('@PLejeuneMedia/html.html.twig');
+                $template = $this->twig->load('@Darkanakin41Media/html.html.twig');
                 break;
             case 'text/css':
-                $template = $this->twig->load('@PLejeuneMedia/css.html.twig');
+                $template = $this->twig->load('@Darkanakin41Media/css.html.twig');
                 break;
             case 'image/jpg':
             case 'image/jpeg':
             case 'image/gif':
             case 'image/png':
-                $template = $this->twig->load('@PLejeuneMedia/image.html.twig');
+                $template = $this->twig->load('@Darkanakin41Media/image.html.twig');
                 $vars['versions'] = $this->fileUpload->getOtherFiles($file);
                 break;
         }

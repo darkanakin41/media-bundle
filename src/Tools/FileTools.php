@@ -1,9 +1,9 @@
 <?php
 
-namespace PLejeune\MediaBundle\Tools;
+namespace Darkanakin41\MediaBundle\Tools;
 
-use PLejeune\MediaBundle\Tools\File;
-use PLejeune\MediaBundle\Entity\File as Entity;
+use Darkanakin41\MediaBundle\Tools\File;
+use Darkanakin41\MediaBundle\Entity\File as Entity;
 
 /**
  * Description of ToolsDocuments
@@ -105,11 +105,11 @@ class FileTools {
         curl_setopt($ch, CURLOPT_BINARYTRANSFER, 1);
         $raw = curl_exec($ch);
         curl_close($ch);
-        
+
         $fp = fopen($saveto, 'x');
         fwrite($fp, $raw);
         fclose($fp);
-        
+
         $this->fichier->setFichier($filename);
     }
 

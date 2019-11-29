@@ -1,9 +1,9 @@
 <?php
 
-namespace PLejeune\MediaBundle\Field;
+namespace Darkanakin41\MediaBundle\Field;
 
-use PLejeune\MediaBundle\Entity\File;
-use PLejeune\MediaBundle\Repository\FileRepository;
+use Darkanakin41\MediaBundle\Entity\File;
+use Darkanakin41\MediaBundle\Repository\FileRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;

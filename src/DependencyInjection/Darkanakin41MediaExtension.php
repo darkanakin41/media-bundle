@@ -1,15 +1,15 @@
 <?php
 
-namespace PLejeune\MediaBundle\DependencyInjection;
+namespace Darkanakin41\MediaBundle\DependencyInjection;
 
 
-use PLejeune\MediaBundle\Service\FileUpload;
+use Darkanakin41\MediaBundle\Service\FileUpload;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Extension\Extension;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 
-class PLejeuneMediaExtension extends Extension
+class Darkanakin41MediaExtension extends Extension
 {
     public function load(array $configs, ContainerBuilder $container)
     {
@@ -19,7 +19,7 @@ class PLejeuneMediaExtension extends Extension
         $configuration = new Configuration();
         $processedConfig = $this->processConfiguration($configuration, $configs);
 
-        $container->setParameter('plejeune.media.config', $processedConfig);
+        $container->setParameter('darkanakin41.media.config', $processedConfig);
         $definition = $container->getDefinition(FileUpload::class);
         $definition->replaceArgument(0, $processedConfig);
     }
@@ -30,7 +30,7 @@ class PLejeuneMediaExtension extends Extension
             return;
         }
 
-        $container->prependExtensionConfig('twig', array('paths' => array(__DIR__.'/../Resources/views' => "PLejeuneMedia")));
+        $container->prependExtensionConfig('twig', array('paths' => array(__DIR__.'/../Resources/views' => "Darkanakin41Media")));
     }
 
 }

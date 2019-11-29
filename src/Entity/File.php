@@ -1,8 +1,8 @@
 <?php
 
-namespace PLejeune\MediaBundle\Entity;
+namespace Darkanakin41\MediaBundle\Entity;
 
-use PLejeune\UserBundle\Entity\User;
+use Darkanakin41\UserBundle\Entity\User;
 
 /**
  * File

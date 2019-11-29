@@ -1,6 +1,6 @@
 <?php
 
-namespace PLejeune\MediaBundle\DependencyInjection;
+namespace Darkanakin41\MediaBundle\DependencyInjection;
 
 
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
