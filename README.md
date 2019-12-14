@@ -1,6 +1,6 @@
 darkanakin41/media-bundle
 ===
-[![Actions Status](https://github.com/darkanakin41/media-bundle/workflows/quality/badge.svg)](https://github.com/darkanakin41/media-bundle/actions)
+[![Actions Status](https://github.com/darkanakin41/media-bundle/workflows/Quality/badge.svg)](https://github.com/darkanakin41/media-bundle/actions)
 
 This is a bundle that I created in order to manage medias in a Symfony project.
 
