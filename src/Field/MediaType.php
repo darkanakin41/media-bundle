@@ -1,5 +1,9 @@
 <?php
 
+/*
+ * This file is part of the Darkanakin41MediaBundle package.
+ */
+
 namespace Darkanakin41\MediaBundle\Field;
 
 use Darkanakin41\MediaBundle\Model\File;
@@ -16,9 +20,9 @@ class MediaType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            "category" => "all",
+            'category' => 'all',
             'class' => File::class,
-            'choice_label' => 'filename'
+            'choice_label' => 'filename',
         ));
     }
 
@@ -32,10 +36,11 @@ class MediaType extends AbstractType
         $category = $options['category'];
         $builder->setAttribute('category', $options['category']);
         $builder->setAttribute('query_builder', function (EntityRepository $fr) use ($category) {
-            $qb = $fr->createQueryBuilder("f");
-            $qb->where("f.category = :category");
-            $qb->orderBy("f.filename");
-            $qb->setParameter("category", $category);
+            $qb = $fr->createQueryBuilder('f');
+            $qb->where('f.category = :category');
+            $qb->orderBy('f.filename');
+            $qb->setParameter('category', $category);
+
             return $qb;
         });
     }

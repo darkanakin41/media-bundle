@@ -1,12 +1,16 @@
 <?php
 
+/*
+ * This file is part of the Darkanakin41MediaBundle package.
+ */
+
 namespace Darkanakin41\MediaBundle\Model;
 
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * File
+ * File.
  *
  * @ORM\MappedSuperclass()
  */
@@ -72,81 +76,51 @@ abstract class File
         return $this->id;
     }
 
-    /**
-     * @return string
-     */
     public function getFilepath(): string
     {
         return $this->filepath;
     }
 
-    /**
-     * @param string $filepath
-     */
     public function setFilepath(string $filepath)
     {
         $this->filepath = $filepath;
     }
 
-    /**
-     * @return string
-     */
     public function getFilename(): string
     {
         return $this->filename;
     }
 
-    /**
-     * @param string $filename
-     */
     public function setFilename(string $filename)
     {
         $this->filename = $filename;
     }
 
-    /**
-     * @return string
-     */
     public function getFiletype(): string
     {
         return $this->filetype;
     }
 
-    /**
-     * @param string $filetype
-     */
     public function setFiletype(string $filetype)
     {
         $this->filetype = $filetype;
     }
 
-    /**
-     * @return string
-     */
     public function getFilesize(): string
     {
         return $this->filesize;
     }
 
-    /**
-     * @param string $filesize
-     */
     public function setFilesize(string $filesize)
     {
         $this->filesize = $filesize;
     }
 
-    /**
-     * @return string
-     */
     public function getCategory(): string
     {
         return $this->category;
     }
 
-    /**
-     * @param string $category
-     */
     public function setCategory(string $category)
     {
         $this->category = $category;
@@ -168,20 +142,13 @@ abstract class File
         $this->copyright = $copyright;
     }
 
-    /**
-     * @return DateTime
-     */
     public function getDate(): DateTime
     {
         return $this->date;
     }
 
-    /**
-     * @param DateTime $date
-     */
     public function setDate(DateTime $date)
     {
         $this->date = $date;
     }
-
 }

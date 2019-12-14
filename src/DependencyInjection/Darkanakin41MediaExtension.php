@@ -1,7 +1,10 @@
 <?php
 
-namespace Darkanakin41\MediaBundle\DependencyInjection;
+/*
+ * This file is part of the Darkanakin41MediaBundle package.
+ */
 
+namespace Darkanakin41\MediaBundle\DependencyInjection;
 
 use Darkanakin41\MediaBundle\Service\FileUpload;
 use Symfony\Component\Config\FileLocator;
@@ -30,7 +33,6 @@ class Darkanakin41MediaExtension extends Extension
             return;
         }
 
-        $container->prependExtensionConfig('twig', array('paths' => array(__DIR__.'/../Resources/views' => "Darkanakin41Media")));
+        $container->prependExtensionConfig('twig', array('paths' => array(__DIR__.'/../Resources/views' => 'Darkanakin41Media')));
     }
-
 }

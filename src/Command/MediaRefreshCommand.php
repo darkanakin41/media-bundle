@@ -1,5 +1,9 @@
 <?php
 
+/*
+ * This file is part of the Darkanakin41MediaBundle package.
+ */
+
 namespace Darkanakin41\MediaBundle\Command;
 
 use Darkanakin41\MediaBundle\Model\File;
@@ -12,7 +16,6 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class MediaRefreshCommand extends Command
 {
-
     protected static $defaultName = 'darkanakin41:media:refresh';
 
     /**
@@ -31,7 +34,6 @@ class MediaRefreshCommand extends Command
         $this->fileInfo = $fileInfo;
     }
 
-
     protected function configure()
     {
         $this->setDescription('Refresh file meta data');
@@ -46,7 +48,7 @@ class MediaRefreshCommand extends Command
             '',
         ));
 
-        $output->writeln(sprintf("Retrieval of media to update"));
+        $output->writeln(sprintf('Retrieval of media to update'));
 
         /** @var File[] $files */
         $files = $this->managerRegistry->getRepository(File::class)->findAll();
@@ -64,5 +66,4 @@ class MediaRefreshCommand extends Command
 
         $output->writeln('');
     }
-
 }

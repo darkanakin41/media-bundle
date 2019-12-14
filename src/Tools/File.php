@@ -1,38 +1,55 @@
 <?php
+
+/*
+ * This file is part of the Darkanakin41MediaBundle package.
+ */
+
 namespace Darkanakin41\MediaBundle\Tools;
 
 /**
- * Description of File
+ * Description of File.
  *
  * @author Pierre
  */
-class File {
-    public function __construct(){}
-
+class File
+{
     private $fichier;
-    public function getFichier(){
+
+    private $file;
+
+    private $folder;
+
+    public function __construct()
+    {
+    }
+
+    public function getFichier()
+    {
         return $this->fichier;
     }
-    public function setFichier($fichier){
+
+    public function setFichier($fichier)
+    {
         $this->fichier = $fichier;
     }
 
-    private $file;
-    public function getFile(){
+    public function getFile()
+    {
         return $this->file;
     }
-    public function setFile($fichier){
+
+    public function setFile($fichier)
+    {
         $this->file = $fichier;
     }
 
-    private $folder;
-    public function getFolder(){
+    public function getFolder()
+    {
         return $this->folder;
     }
-    public function setFolder($folder){
+
+    public function setFolder($folder)
+    {
         $this->folder = $folder;
     }
-
 }
-
-?>

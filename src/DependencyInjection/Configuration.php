@@ -1,14 +1,16 @@
 <?php
 
-namespace Darkanakin41\MediaBundle\DependencyInjection;
+/*
+ * This file is part of the Darkanakin41MediaBundle package.
+ */
 
+namespace Darkanakin41\MediaBundle\DependencyInjection;
 
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 
 class Configuration implements ConfigurationInterface
 {
-
     /**
      * Generates the configuration tree builder.
      *

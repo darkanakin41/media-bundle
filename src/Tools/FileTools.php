@@ -1,18 +1,20 @@
 <?php
 
+/*
+ * This file is part of the Darkanakin41MediaBundle package.
+ */
+
 namespace Darkanakin41\MediaBundle\Tools;
 
 use Darkanakin41\MediaBundle\Model\File as Entity;
 
 /**
- * Description of ToolsDocuments
+ * Description of ToolsDocuments.
  */
 class FileTools
 {
-
     private static $baseFolder;
     /**
-     *
      * @var File
      */
     private $fichier;
@@ -38,12 +40,9 @@ class FileTools
             $kernel = $kernel->getKernel();
         }
 
-        self::$baseFolder = $kernel->getProjectDir().DIRECTORY_SEPARATOR."public";
+        self::$baseFolder = $kernel->getProjectDir().DIRECTORY_SEPARATOR.'public';
     }
 
-    /**
-     * @param Entity $file
-     */
     public static function delete(Entity $file)
     {
         unlink($file->getFilepath());
@@ -61,12 +60,7 @@ class FileTools
 
     public function getUploadRootDir()
     {
-        return self::$baseFolder."/".$this->getUploadDir();
-    }
-
-    protected function getUploadDir()
-    {
-        return $this->fichier->getFolder();
+        return self::$baseFolder.'/'.$this->getUploadDir();
     }
 
     public function getWebPath()
@@ -84,18 +78,11 @@ class FileTools
         $filename = $this->fichier->getFile()->getClientOriginalName();
         if (!is_null($this->name)) {
             $extension = pathinfo($this->fichier->getFile()->getClientOriginalName(), PATHINFO_EXTENSION);
-            $filename = strtolower(sprintf("%s-%s.%s", $this->name, time(), $extension));
+            $filename = strtolower(sprintf('%s-%s.%s', $this->name, time(), $extension));
         }
         $this->fichier->getFile()->move($this->getUploadRootDir(), $filename);
         $this->fichier->setFichier($filename);
         $this->fichier->setFile(null);
-    }
-
-    private function checkFolder()
-    {
-        if (!file_exists($this->getUploadRootDir())) {
-            mkdir($this->getUploadRootDir(), 0777, true);
-        }
     }
 
     public function download($url)
@@ -107,7 +94,7 @@ class FileTools
         $this->checkFolder();
 
         $extension = pathinfo($url, PATHINFO_EXTENSION);
-        $filename = strtolower(sprintf("%s-%s.%s", $this->name, time(), $extension));
+        $filename = strtolower(sprintf('%s-%s.%s', $this->name, time(), $extension));
 
         $saveto = $this->getUploadRootDir().$filename;
         if (file_exists($saveto)) {
@@ -128,6 +115,15 @@ class FileTools
         $this->fichier->setFichier($filename);
     }
 
-}
+    protected function getUploadDir()
+    {
+        return $this->fichier->getFolder();
+    }
 
-?>
+    private function checkFolder()
+    {
+        if (!file_exists($this->getUploadRootDir())) {
+            mkdir($this->getUploadRootDir(), 0777, true);
+        }
+    }
+}
