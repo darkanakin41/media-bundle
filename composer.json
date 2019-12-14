@@ -1,43 +1,53 @@
 {
-  "name": "darkanakin41/media-bundle",
-  "type": "symfony-bundle",
-  "description": "Pierre LEJEUNE MediaBundle",
-  "keywords": [
-    "media",
-    "image",
-    "symfony",
-    "bundle"
-  ],
-  "homepage": "https://github.com/darkanakin41/media-bundle",
-  "license": "MIT",
-  "authors": [
-    {
-      "name": "Pierre LEJEUNE",
-      "email": "darkanakin41@gmail.com"
+    "name": "darkanakin41/media-bundle",
+    "type": "symfony-bundle",
+    "description": "Pierre LEJEUNE MediaBundle",
+    "keywords": [
+        "media",
+        "image",
+        "symfony",
+        "bundle"
+    ],
+    "homepage": "https://github.com/darkanakin41/media-bundle",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Pierre LEJEUNE",
+            "email": "darkanakin41@gmail.com"
+        }
+    ],
+    "require": {
+        "php": "^7",
+        "darkanakin41/core-bundle": "dev-master",
+        "symfony/asset": "*",
+        "symfony/form": "*",
+        "symfony/framework-bundle": "*",
+        "symfony/orm-pack": "*",
+        "symfony/twig-bundle": "*",
+        "symfony/validator": "*",
+        "symfony/yaml": "*"
+    },
+    "require-dev": {
+        "doctrine/doctrine-bundle": "^1.3",
+        "friendsofphp/php-cs-fixer": "^2.14",
+        "phpunit/phpunit": "^8.4",
+        "symfony/console": "^4.0",
+        "symfony/test-pack": "*"
+    },
+    "suggest": {
+        "ext-gd": "If you want to use the image resizing functions"
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "autoload": {
+        "psr-4": {
+            "Darkanakin41\\MediaBundle\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Darkanakin41\\MediaBundle\\Tests\\": "tests/"
+        }
     }
-  ],
-  "require": {
-    "php": "^7.0",
-    "darkanakin41/core-bundle": "dev-master",
-    "symfony/asset": "*",
-    "symfony/form": "*",
-    "symfony/framework-bundle": "*",
-    "symfony/orm-pack": "*",
-    "symfony/twig-bundle": "*",
-    "symfony/validator": "*",
-    "symfony/yaml": "*"
-  },
-  "config": {
-    "sort-packages": true
-  },
-  "autoload": {
-    "psr-4": {
-      "Darkanakin41\\MediaBundle\\": "src/"
-    }
-  },
-  "autoload-dev": {
-    "psr-4": {
-      "Darkanakin41\\MediaBundle\\Tests\\": "tests/"
-    }
-  }
 }

@@ -1,54 +1,68 @@
 <?php
 
-namespace Darkanakin41\MediaBundle\Extension;
+namespace Darkanakin41\MediaBundle\Twig;
 
 
-use Darkanakin41\MediaBundle\Entity\File;
+use Darkanakin41\MediaBundle\Model\File;
+use Darkanakin41\MediaBundle\Service\FileUpload;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Twig\Environment;
+use Twig\Extension\AbstractExtension;
+use Twig\TwigFunction;
 
-class FileExtension extends \Twig_Extension
+class FileExtension extends AbstractExtension
 {
     /**
      * @var ContainerInterface
      */
     private $container;
     /**
-     * @var \Twig\Environment
+     * @var Environment
      */
     private $twig;
     /**
-     * @var \Darkanakin41\MediaBundle\Service\FileUpload
+     * @var FileUpload
      */
     private $fileUpload;
+    /**
+     * @var FileInfo
+     */
+    private $fileInfo;
+    /**
+     * @var ManagerRegistry
+     */
+    private $managerRegistry;
 
-    public function __construct(ContainerInterface $container)
+    public function __construct(ManagerRegistry $managerRegistry, FileUpload $fileUpload, FileInfo $fileInfo, Environment $twig)
     {
-        $this->container = $container;
-        $this->twig = $container->get('twig');
-        $this->fileUpload = $container->get('Darkanakin41.media.fileupload');
+        $this->managerRegistry = $managerRegistry;
+        $this->fileUpload = $fileUpload;
+        $this->fileInfo = $fileInfo;
+        $this->twig = $twig;
     }
 
     public function getFilters()
     {
-        return array();
+        return [];
     }
 
     public function getFunctions()
     {
         return array(
-            new \Twig_SimpleFunction('file_render', [$this, 'render'], ['is_safe' => ['html']]),
+            new TwigFunction('file_render', [$this, 'render'], ['is_safe' => ['html']]),
         );
     }
 
     public function render(File $file, array $classes = [], string $title = null, $block = 'default')
     {
-        if($title === null){
+        if ($title === null) {
             $title = $file->getFilename();
         }
-        if(empty($file->getFiletype())){
-            $this->container->get('Darkanakin41.media.fileinfo')->refresh($file);
-            $this->container->get('doctrine')->getManager()->persist($file);
-            $this->container->get('doctrine')->getManager()->flush();
+        if (empty($file->getFiletype())) {
+            $this->fileInfo->refresh($file);
+            $this->managerRegistry->getManager()->persist($file);
+            $this->managerRegistry->getManager()->flush();
         }
         $template = null;
         $vars = ['file' => $file, 'classes' => $classes, 'title' => $title];
@@ -67,7 +81,7 @@ class FileExtension extends \Twig_Extension
                 $vars['versions'] = $this->fileUpload->getOtherFiles($file);
                 break;
         }
-        if($template !== null){
+        if ($template !== null) {
             return $template->renderBlock($block, $vars);
         }
         return '';

@@ -2,39 +2,67 @@
 
 namespace Darkanakin41\MediaBundle\Command;
 
-use Darkanakin41\MediaBundle\Entity\File;
-use Darkanakin41\MediaBundle\Repository\FileRepository;
-use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
+use Darkanakin41\MediaBundle\Model\File;
+use Darkanakin41\MediaBundle\Twig\FileInfo;
+use Symfony\Bridge\Doctrine\ManagerRegistry;
+use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class MediaRefreshCommand extends ContainerAwareCommand
+class MediaRefreshCommand extends Command
 {
+
+    protected static $defaultName = 'darkanakin41:media:refresh';
+
+    /**
+     * @var ManagerRegistry
+     */
+    private $managerRegistry;
+    /**
+     * @var FileInfo
+     */
+    private $fileInfo;
+
+    public function __construct(ManagerRegistry $managerRegistry, FileInfo $fileInfo, string $name = null)
+    {
+        parent::__construct($name);
+        $this->managerRegistry = $managerRegistry;
+        $this->fileInfo = $fileInfo;
+    }
+
 
     protected function configure()
     {
-        $this->setName('Darkanakin41:media:refresh');
-        $this->setDescription('Rafraichit les méta des medias');
-        $this->setHelp('Rafraichit les méta des medias');
+        $this->setDescription('Refresh file meta data');
+        $this->setHelp('Refresh file meta data');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $doctrine = $this->getContainer()->get('doctrine');
+        $output->writeln(array(
+            'Darkanakin41 Media Refresh',
+            '============',
+            '',
+        ));
 
-        $output->writeln(sprintf("Recuperation des medias a mettre a jour"));
-        /**
-         * @var FileRepository
-         */
-        $files = $doctrine->getRepository(File::class)->findAll();
+        $output->writeln(sprintf("Retrieval of media to update"));
 
+        /** @var File[] $files */
+        $files = $this->managerRegistry->getRepository(File::class)->findAll();
 
-        $i = 0;
+        $progressBar = new ProgressBar($output, count($files));
+        $progressBar->setFormat('Update media : %current%/%max% [%bar%] %percent:3s%% %elapsed:6s%/%estimated:-6s% %memory:6s%');
+
+        $progressBar->start();
         foreach ($files as $file) {
-            $output->writeln(sprintf("%d/%d : Mise a jour de media", $i++, count($files)));
-            $this->getContainer()->get('Darkanakin41.media.fileinfo')->refresh($file);
-            $doctrine->getManager()->flush();
+            $progressBar->display();
+            $this->fileInfo->refresh($file);
+            $this->managerRegistry->getManager()->flush();
         }
+        $progressBar->finish();
+
+        $output->writeln('');
     }
 
 }

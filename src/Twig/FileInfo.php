@@ -1,15 +1,17 @@
 <?php
 
-namespace Darkanakin41\MediaBundle\Service;
+namespace Darkanakin41\MediaBundle\Twig;
 
-use Darkanakin41\MediaBundle\Entity\File;
+use Darkanakin41\MediaBundle\Model\File;
 use Darkanakin41\MediaBundle\Tools\File as ToolFile;
 use Darkanakin41\MediaBundle\Tools\FileTools;
 use Darkanakin41\CoreBundle\Tools\Slugify;
 use Symfony\Component\Asset\Packages;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Twig\Extension\AbstractExtension;
+use Twig\TwigFunction;
 
-class FileInfo extends \Twig_Extension{
+class FileInfo extends AbstractExtension {
 
     CONST base_folder = "media/";
     const EXTENSION_MAPPING = [
@@ -26,15 +28,10 @@ class FileInfo extends \Twig_Extension{
         $this->packages = $packages;
     }
 
-    public function getName()
-    {
-        return 'FileInfo';
-    }
-
     public function getFunctions()
     {
         return array(
-            new \Twig_SimpleFunction('fileinfo_image_dimensions', array($this, 'getImageDimensions')),
+            new TwigFunction('fileinfo_image_dimensions', [$this, 'getImageDimensions']),
         );
     }
 

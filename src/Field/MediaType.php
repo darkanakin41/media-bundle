@@ -2,8 +2,8 @@
 
 namespace Darkanakin41\MediaBundle\Field;
 
-use Darkanakin41\MediaBundle\Entity\File;
-use Darkanakin41\MediaBundle\Repository\FileRepository;
+use Darkanakin41\MediaBundle\Model\File;
+use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -31,11 +31,11 @@ class MediaType extends AbstractType
     {
         $category = $options['category'];
         $builder->setAttribute('category', $options['category']);
-        $builder->setAttribute('query_builder', function (FileRepository $fr) use ($category) {
+        $builder->setAttribute('query_builder', function (EntityRepository $fr) use ($category) {
             $qb = $fr->createQueryBuilder("f");
             $qb->where("f.category = :category");
             $qb->orderBy("f.filename");
-            $qb->setParameter("category",$category);
+            $qb->setParameter("category", $category);
             return $qb;
         });
     }

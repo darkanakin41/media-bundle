@@ -2,32 +2,15 @@
 
 namespace Darkanakin41\MediaBundle\Tools;
 
-use Darkanakin41\MediaBundle\Tools\File;
-use Darkanakin41\MediaBundle\Entity\File as Entity;
+use Darkanakin41\MediaBundle\Model\File as Entity;
 
 /**
  * Description of ToolsDocuments
- *
- * @author pierre_lejeune
  */
-class FileTools {
+class FileTools
+{
 
     private static $baseFolder;
-
-    public static function setBaseFolder() {
-        global $kernel;
-
-        if ('AppCache' == get_class($kernel)) {
-            $kernel = $kernel->getKernel();
-        }
-
-        self::$baseFolder = $kernel->getProjectDir() . DIRECTORY_SEPARATOR . "public";
-    }
-
-    public static function getBaseFolder() {
-        return self::$baseFolder;
-    }
-
     /**
      *
      * @var File
@@ -35,33 +18,64 @@ class FileTools {
     private $fichier;
     private $name;
 
-    public function getFichier() {
-        return $this->fichier;
-    }
-
-    public function __construct(File $doc, $name = null) {
+    public function __construct(File $doc, $name = null)
+    {
         $this->fichier = $doc;
         $this->name = $name;
         self::setBaseFolder();
     }
 
-    public function getAbsolutePath() {
-        return null === $this->fichier->getFichier() ? null : $this->getUploadRootDir() . '/' . $this->fichier->getFichier();
+    public static function getBaseFolder()
+    {
+        return self::$baseFolder;
     }
 
-    public function getWebPath() {
-        return null === $this->fichier->getFichier() ? null : $this->getUploadDir() . '/' . $this->fichier->getFichier();
+    public static function setBaseFolder()
+    {
+        global $kernel;
+
+        if ('AppCache' == get_class($kernel)) {
+            $kernel = $kernel->getKernel();
+        }
+
+        self::$baseFolder = $kernel->getProjectDir().DIRECTORY_SEPARATOR."public";
     }
 
-    public function getUploadRootDir() {
-        return self::$baseFolder . "/" . $this->getUploadDir();
+    /**
+     * @param Entity $file
+     */
+    public static function delete(Entity $file)
+    {
+        unlink($file->getFilepath());
     }
 
-    protected function getUploadDir() {
+    public function getFichier()
+    {
+        return $this->fichier;
+    }
+
+    public function getAbsolutePath()
+    {
+        return null === $this->fichier->getFichier() ? null : $this->getUploadRootDir().'/'.$this->fichier->getFichier();
+    }
+
+    public function getUploadRootDir()
+    {
+        return self::$baseFolder."/".$this->getUploadDir();
+    }
+
+    protected function getUploadDir()
+    {
         return $this->fichier->getFolder();
     }
 
-    public function upload() {
+    public function getWebPath()
+    {
+        return null === $this->fichier->getFichier() ? null : $this->getUploadDir().'/'.$this->fichier->getFichier();
+    }
+
+    public function upload()
+    {
         if (null === $this->fichier->getFile()) {
             return;
         }
@@ -77,14 +91,15 @@ class FileTools {
         $this->fichier->setFile(null);
     }
 
-    /**
-     * @param Entity $file
-     */
-    public static function delete(Entity $file){
-        unlink($file->getFilepath());
+    private function checkFolder()
+    {
+        if (!file_exists($this->getUploadRootDir())) {
+            mkdir($this->getUploadRootDir(), 0777, true);
+        }
     }
 
-    public function download($url) {
+    public function download($url)
+    {
         if (null === $this->fichier) {
             return;
         }
@@ -94,7 +109,7 @@ class FileTools {
         $extension = pathinfo($url, PATHINFO_EXTENSION);
         $filename = strtolower(sprintf("%s-%s.%s", $this->name, time(), $extension));
 
-        $saveto = $this->getUploadRootDir() . $filename;
+        $saveto = $this->getUploadRootDir().$filename;
         if (file_exists($saveto)) {
             unlink($saveto);
         }
@@ -111,12 +126,6 @@ class FileTools {
         fclose($fp);
 
         $this->fichier->setFichier($filename);
-    }
-
-    private function checkFolder() {
-        if (!file_exists($this->getUploadRootDir())) {
-            mkdir($this->getUploadRootDir(), 0777, true);
-        }
     }
 
 }

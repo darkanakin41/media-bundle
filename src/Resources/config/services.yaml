@@ -1,14 +1,14 @@
 services:
     darkanakin41.media:
         public: true
-        class: Darkanakin41\MediaBundle\Extension\FileExtension
+        class: Darkanakin41\MediaBundle\Twig\FileExtension
         arguments: ["@service_container"]
         tags:
             - { name: twig.extension }
 
     darkanakin41.media.fileinfo:
         public : true
-        class: Darkanakin41\MediaBundle\Service\FileInfo
+        class: Darkanakin41\MediaBundle\Twig\FileInfo
         arguments: ["@assets.packages"]
         tags:
             -  { name: twig.extension }

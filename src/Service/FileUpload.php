@@ -2,15 +2,15 @@
 
 namespace Darkanakin41\MediaBundle\Service;
 
-use Darkanakin41\MediaBundle\Entity\File;
+use Darkanakin41\MediaBundle\Model\File;
 use Darkanakin41\MediaBundle\Tools\ResizeImage;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Darkanakin41\CoreBundle\Tools\Slugify;
 
 class FileUpload
 {
-    public CONST PATH_RELATIVE = 'relative';
-    public CONST PATH_ABSOLUTE = 'absolute';
+    CONST PATH_RELATIVE = 'relative';
+    CONST PATH_ABSOLUTE = 'absolute';
 
     /**
      * @var array

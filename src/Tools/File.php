@@ -1,11 +1,6 @@
 <?php
 namespace Darkanakin41\MediaBundle\Tools;
 
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 /**
  * Description of File
  *
