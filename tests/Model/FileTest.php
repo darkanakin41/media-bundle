@@ -13,9 +13,11 @@ class StreamTest extends AbstractEntityTestCase
     {
         return [
             ['filename', 'toto'],
+            ['filepath', 'toto'],
             ['filetype', 'toto'],
             ['filesize', 'toto'],
             ['category', 'toto'],
+            ['date', new \DateTime()],
         ];
     }
 
@@ -42,21 +44,13 @@ class StreamTest extends AbstractEntityTestCase
 
 
     public function testDate(){
-        $entity = $this->getFile();
+        $entity = $this->getEntity();
         $this->assertNotNull($entity->getDate());
 
         $now = new \DateTime();
         $format = "Y-m-d H:i:s";
 
         $this->assertEquals($now->format($format), $entity->getDate()->format($format));
-    }
-
-    /**
-     * @return File
-     */
-    protected function getFile()
-    {
-        return $this->getMockForAbstractClass(File::class);
     }
 
 }
