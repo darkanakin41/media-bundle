@@ -1,4 +1,9 @@
 services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        public: false
+
     darkanakin41.media:
         public: true
         class: Darkanakin41\MediaBundle\Twig\FileExtension
