@@ -9,7 +9,6 @@ namespace Darkanakin41\MediaBundle\Twig;
 use Darkanakin41\MediaBundle\Model\File;
 use Darkanakin41\MediaBundle\Service\FileUpload;
 use Doctrine\Common\Persistence\ManagerRegistry;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 use Twig\Environment;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
