@@ -35,13 +35,13 @@ abstract class File
 
     /**
      * @var string
-     * @ORM\Column(name="filetype", type="string")
+     * @ORM\Column(name="filetype", type="string", nullable=true)
      */
     private $filetype;
 
     /**
      * @var string
-     * @ORM\Column(name="filesize", type="string")
+     * @ORM\Column(name="filesize", type="string", nullable=true)
      */
     private $filesize;
 
@@ -96,7 +96,7 @@ abstract class File
         $this->filename = $filename;
     }
 
-    public function getFiletype(): string
+    public function getFiletype(): ?string
     {
         return $this->filetype;
     }
@@ -106,7 +106,7 @@ abstract class File
         $this->filetype = $filetype;
     }
 
-    public function getFilesize(): string
+    public function getFilesize(): ?string
     {
         return $this->filesize;
     }

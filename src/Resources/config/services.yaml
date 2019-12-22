@@ -2,19 +2,18 @@ services:
     _defaults:
         autowire: true
         autoconfigure: true
-        public: false
+        public: true
 
     darkanakin41.media:
         public: true
         class: Darkanakin41\MediaBundle\Twig\FileExtension
-        arguments: ["@service_container"]
         tags:
             - { name: twig.extension }
 
-    darkanakin41.media.fileinfo:
+    Darkanakin41\MediaBundle\Twig\FileInfo:
         public : true
         class: Darkanakin41\MediaBundle\Twig\FileInfo
-        arguments: ["@assets.packages"]
+#        arguments: ["@assets.packages"]
         tags:
             -  { name: twig.extension }
 
@@ -22,6 +21,7 @@ services:
         class: Darkanakin41\MediaBundle\Service\FileUpload
         arguments: [[], '%kernel.project_dir%']
         public : true
+
     darkanakin41.media.fileupload:
         alias: Darkanakin41\MediaBundle\Service\FileUpload
         public: true
