@@ -8,7 +8,7 @@ namespace Darkanakin41\MediaBundle\Command;
 
 use Darkanakin41\MediaBundle\Model\File;
 use Darkanakin41\MediaBundle\Twig\FileInfo;
-use Symfony\Bridge\Doctrine\ManagerRegistry;
+use Doctrine\Common\Persistence\ManagerRegistry;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Input\InputInterface;
