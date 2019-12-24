@@ -1,0 +1,84 @@
+darkanakin41_media:
+    storage_folder: '%kernel.project_dir%/build/media/'
+    image_formats:
+        banner:
+            large:
+                width: 1200
+                height: 600
+                min-width: 800
+                resize: 'exact'
+                quality: 100
+            normal:
+                width: 880
+                height: 440
+                min-width: 400
+                resize: 'exact'
+                quality: 90
+            small:
+                width: 440
+                height: 220
+                min-width: 0
+                resize: 'exact'
+                quality: 90
+        content:
+            large:
+                width: 1200
+                height: 600
+                min-width: 800
+                resize: 'maxwidth'
+                quality: 100
+            normal:
+                width: 880
+                height: 0
+                min-width: 400
+                resize: 'maxwidth'
+                quality: 90
+            small:
+                width: 440
+                height: 0
+                min-width: 0
+                resize: 'maxwidth'
+                quality: 90
+        dce_logo:
+            small:
+                width: 180
+                height: 200
+                min-width: 0
+                resize: 'exact'
+                quality: 90
+        avatar:
+            small:
+                width: 180
+                height: 200
+                min-width: 0
+                resize: 'exact'
+                quality: 90
+        dce_solution:
+            large:
+                width: 1200
+                height: 600
+                min-width: 800
+                resize: 'maxwidth'
+                quality: 100
+            normal:
+                width: 880
+                height: 0
+                min-width: 400
+                resize: 'maxwidth'
+                quality: 90
+            small:
+                width: 440
+                height: 0
+                min-width: 0
+                resize: 'maxwidth'
+                quality: 90
+    categories:
+        - avatar
+        - banner
+        - content
+        - dce_logo
+        - dce_solution
+        - logo
+        - partner_campaign
+#    - carousel
+#    - reward

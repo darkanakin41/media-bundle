@@ -18,6 +18,7 @@ use Twig\TwigFunction;
 class FileInfo extends AbstractExtension
 {
     const base_folder = 'media/';
+
     const EXTENSION_MAPPING = array(
         'css' => 'text/css',
         'twig' => 'text/html',

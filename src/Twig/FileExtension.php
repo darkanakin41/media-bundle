@@ -48,7 +48,7 @@ class FileExtension extends AbstractExtension
     public function getFunctions()
     {
         return array(
-            new TwigFunction('file_render', array($this, 'render'), array('is_safe' => array('html'))),
+            new TwigFunction('darkanakin41_file_render', [$this, 'render'], ['is_safe' => ['html']]),
         );
     }
 
@@ -57,11 +57,7 @@ class FileExtension extends AbstractExtension
         if (null === $title) {
             $title = $file->getFilename();
         }
-        if (empty($file->getFiletype())) {
-            $this->fileInfo->refresh($file);
-            $this->managerRegistry->getManager()->persist($file);
-            $this->managerRegistry->getManager()->flush();
-        }
+
         $template = null;
         $vars = array('file' => $file, 'classes' => $classes, 'title' => $title);
         switch ($file->getFiletype()) {

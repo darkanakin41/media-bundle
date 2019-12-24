@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <phpunit bootstrap="./tests/bootstrap.php" colors="true">
+    <php>
+        <server name="KERNEL_DIR" value="./tests/Fixtures/App" />
+        <server name="KERNEL_CLASS" value="\AppKernel" />
+        <env name="SYMFONY_DEPRECATIONS_HELPER" value="weak" />
+        <ini name="display_startup_errors" value="1" />
+    </php>
 
     <testsuites>
         <testsuite name="Darkanakin41TableBundle test suite">

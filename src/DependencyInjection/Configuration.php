@@ -18,8 +18,12 @@ class Configuration implements ConfigurationInterface
      */
     public function getConfigTreeBuilder()
     {
-        $treeBuilder = new TreeBuilder();
-        $rootNode = $treeBuilder->root('p_lejeune_media');
+        $treeBuilder = new TreeBuilder('darkanakin41_media');
+        if (method_exists($treeBuilder, 'getRootNode')) {
+            $rootNode = $treeBuilder->getRootNode();
+        } else {
+            $rootNode = $treeBuilder->root('darkanakin41_media');
+        }
 
         $rootNode->children()
             ->scalarNode('storage_folder')->end()

@@ -48,7 +48,8 @@
     "autoload-dev": {
         "psr-4": {
             "Darkanakin41\\MediaBundle\\Tests\\": "tests/",
-            "Darkanakin41\\CoreBundle\\Tests\\": "vendor/darkanakin41/core-bundle/tests/"
+            "Darkanakin41\\CoreBundle\\Tests\\": "vendor/darkanakin41/core-bundle/tests/",
+            "AppTestBundle\\": "tests/Fixtures/AppTestBundle/"
         }
     }
 }
