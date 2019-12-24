@@ -48,7 +48,7 @@ class FileExtension extends AbstractExtension
     public function getFunctions()
     {
         return array(
-            new TwigFunction('darkanakin41_file_render', [$this, 'render'], ['is_safe' => ['html']]),
+            new TwigFunction('darkanakin41_file_render', array($this, 'render'), array('is_safe' => array('html'))),
         );
     }
 
