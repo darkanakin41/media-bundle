@@ -7,11 +7,12 @@
 namespace Darkanakin41\MediaBundle\Service;
 
 use Darkanakin41\CoreBundle\Tools\Slugify;
+use Darkanakin41\MediaBundle\DependencyInjection\Darkanakin41MediaExtension;
 use Darkanakin41\MediaBundle\Model\File;
-use Darkanakin41\MediaBundle\Tools\ResizeImage;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
-class FileUpload
+class FileUploadService
 {
     const PATH_RELATIVE = 'relative';
     const PATH_ABSOLUTE = 'absolute';
@@ -21,29 +22,19 @@ class FileUpload
      */
     private $config;
     /**
-     * @var string
+     * @var ResizeImageService
      */
-    private $rootFolder;
+    private $resizeImage;
 
     /**
      * FileUpload constructor.
      *
      * @param string $rootFolder
      */
-    public function __construct(array $config, $rootFolder)
+    public function __construct(ParameterBagInterface $parameterBag, ResizeImageService $resizeImage)
     {
-        $this->config = $config;
-        $this->rootFolder = $rootFolder;
-    }
-
-    public function getRootFolder()
-    {
-        return $this->rootFolder;
-    }
-
-    public function getName()
-    {
-        return 'FileUpload';
+        $this->config = $parameterBag->get(Darkanakin41MediaExtension::CONFIG_KEY);
+        $this->resizeImage = $resizeImage;
     }
 
     /**
@@ -59,14 +50,42 @@ class FileUpload
     public function upload(UploadedFile $file, $name = 'image', $category = '')
     {
         $now = new \DateTime('now');
+
         $extension = $file->getClientOriginalExtension();
-        $fileName = sprintf('%s-%s.%s', Slugify::process($name), time(), $extension);
-        $folder = sprintf('%s%s/%s/%s/', $this->config['storage_folder'], $category, $now->format('Y'), $now->format('m'));
-        $mimeType = $file->getMimeType();
+        $fileName = sprintf('%s-%s.%s', Slugify::process($name), $now->format('U'), $extension);
+
+        $folder = sprintf('%s%s/%s/%s/', $this->getTargetFolder(), $category, $now->format('Y'), $now->format('m'));
+
         $file->move($folder, $fileName);
 
-        if (in_array($mimeType, array('image/jpg', 'image/jpeg', 'image/gif', 'image/png')) && in_array($category, array_keys($this->config['image_formats']))) {
-            $resizer = new ResizeImage($folder.$fileName);
+        if ($this->isResizeEnabled()) {
+            $this->resize($file->getMimeType(), $name, $category, $fileName, $extension);
+        }
+
+        return $this->calculatePath($folder.$fileName, self::PATH_RELATIVE);
+    }
+
+    public function getTargetFolder()
+    {
+        return $this->config['base_folder'].$this->config['storage_folder'];
+    }
+
+    public function isResizeEnabled()
+    {
+        return $this->config['resize'];
+    }
+
+    public function resize(string $mimeType, $name, $category, $folder, $filename, $extension)
+    {
+        if (!in_array($mimeType, array('image/jpg', 'image/jpeg', 'image/gif', 'image/png'))) {
+            return;
+        }
+        if (!in_array($category, array_keys($this->config['image_formats']))) {
+            return;
+        }
+
+        try {
+            $this->resizeImage->process($folder.$filename, $extension, $category);
             foreach ($this->config['image_formats'][$category] as $key => $values) {
                 $quality = 90;
                 if (isset($values['quality'])) {
@@ -74,11 +93,22 @@ class FileUpload
                 }
                 $resizer->resizeTo($values['width'], $values['height'], $values['resize']);
                 $resizeFileName = sprintf('%s-%s-%s.%s', Slugify::process($name), time(), $key, $extension);
+
                 $resizer->saveImage($folder.DIRECTORY_SEPARATOR.$resizeFileName, $quality);
             }
+        } catch (\Exception $e) {
+        }
+    }
+
+    public function calculatePath($path, $pathType)
+    {
+        if (self::PATH_RELATIVE === $pathType && 0 === stripos($path, $this->getRootFolder())) {
+            return str_ireplace($this->getRootFolder().'/public/', '', $path);
+        } elseif (self::PATH_ABSOLUTE === $pathType && false === stripos($path, $this->getRootFolder())) {
+            return $this->getRootFolder().'/public/'.$path;
         }
 
-        return $this->calculatePath($folder.$fileName, self::PATH_RELATIVE);
+        return $path;
     }
 
     public function delete(File $file)
@@ -92,6 +122,13 @@ class FileUpload
         @unlink($this->calculatePath($path, self::PATH_ABSOLUTE));
     }
 
+    /**
+     * Get other versions of the file if available
+     *
+     * @param File $file
+     *
+     * @return array
+     */
     public function getOtherFiles(File $file)
     {
         $mimeType = $file->getFiletype();
@@ -116,16 +153,6 @@ class FileUpload
         return $retour;
     }
 
-    public function calculatePath($path, $pathType)
-    {
-        if (self::PATH_RELATIVE === $pathType && 0 === stripos($path, $this->getRootFolder())) {
-            return str_ireplace($this->getRootFolder().'/public/', '', $path);
-        } elseif (self::PATH_ABSOLUTE === $pathType && false === stripos($path, $this->getRootFolder())) {
-            return $this->getRootFolder().'/public/'.$path;
-        }
-
-        return $path;
-    }
 
     /**
      * Retrieve the version of the file if exist, otherwise, return the default one.

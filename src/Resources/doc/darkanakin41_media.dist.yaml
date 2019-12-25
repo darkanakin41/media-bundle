@@ -1,5 +1,7 @@
-p_lejeune_media :
-  storage_folder : '%kernel.project_dir%/public/media/'
+darkanakin41_media :
+  base_folder : '%kernel.project_dir%/public'
+  storage_folder : 'media/'
+  resize: true
   image_formats :
     banner:
       large :
@@ -15,4 +17,5 @@ p_lejeune_media :
         height : 220
         min-width: 400
   categories:
+    - banner
     - logo

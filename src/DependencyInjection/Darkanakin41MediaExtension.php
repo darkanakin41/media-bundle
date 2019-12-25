@@ -6,7 +6,6 @@
 
 namespace Darkanakin41\MediaBundle\DependencyInjection;
 
-use Darkanakin41\MediaBundle\Service\FileUpload;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Extension\Extension;
@@ -14,6 +13,8 @@ use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 
 class Darkanakin41MediaExtension extends Extension
 {
+    const CONFIG_KEY = 'darkanakin41.media.config';
+
     public function load(array $configs, ContainerBuilder $container)
     {
         $loader = new YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
@@ -22,9 +23,11 @@ class Darkanakin41MediaExtension extends Extension
         $configuration = new Configuration();
         $processedConfig = $this->processConfiguration($configuration, $configs);
 
-        $container->setParameter('darkanakin41.media.config', $processedConfig);
-        $definition = $container->getDefinition(FileUpload::class);
-        $definition->replaceArgument(0, $processedConfig);
+        $container->setParameter(self::CONFIG_KEY, $processedConfig);
+
+        if (!is_dir($processedConfig['base_folder'].$processedConfig['storage_folder'])) {
+            mkdir($processedConfig['base_folder'].$processedConfig['storage_folder'], 0775, true);
+        }
     }
 
     public function prepend(ContainerBuilder $container)

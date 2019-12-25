@@ -9,28 +9,14 @@ services:
         public: true
         resource: '../../{Service}'
 
+    Darkanakin41\MediaBundle\Service\:
+        autowire: true
+        public: true
+        resource: '../../Service'
+
     Darkanakin41\MediaBundle\Twig\:
         autowire: true
         public: true
         resource: '../../Twig'
         tags:
-            - { name: twig.extension }
-
-    darkanakin41.media:
-        public: true
-        alias: Darkanakin41\MediaBundle\Twig\FileExtension
-
-    Darkanakin41\MediaBundle\Service\FileUpload:
-        class: Darkanakin41\MediaBundle\Service\FileUpload
-        arguments: [[], '%kernel.project_dir%']
-        public : true
-
-    darkanakin41.media.fileupload:
-        alias: Darkanakin41\MediaBundle\Service\FileUpload
-        public: true
-
-    darkanakin41.media.command.update:
-        public: true
-        class: Darkanakin41\MediaBundle\Command\MediaRefreshCommand
-        tags:
-            - { name: console.command }
+        - { name: twig.extension }

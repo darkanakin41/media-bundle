@@ -2,6 +2,7 @@
 # Can be easily overridden in each test config
 imports:
     - { resource: services.yaml }
+    - { resource: darkanakin41_media.yaml }
 
 framework:
     secret: secret

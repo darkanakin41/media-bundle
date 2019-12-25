@@ -7,7 +7,7 @@
 namespace Darkanakin41\MediaBundle\Twig;
 
 use Darkanakin41\MediaBundle\Model\File;
-use Darkanakin41\MediaBundle\Service\FileUpload;
+use Darkanakin41\MediaBundle\Service\FileUploadService;
 use Doctrine\Common\Persistence\ManagerRegistry;
 use Twig\Environment;
 use Twig\Extension\AbstractExtension;
@@ -20,11 +20,11 @@ class FileExtension extends AbstractExtension
      */
     private $twig;
     /**
-     * @var FileUpload
+     * @var FileUploadService
      */
     private $fileUpload;
     /**
-     * @var FileInfo
+     * @var FileInfoExtension
      */
     private $fileInfo;
     /**
@@ -32,7 +32,7 @@ class FileExtension extends AbstractExtension
      */
     private $managerRegistry;
 
-    public function __construct(ManagerRegistry $managerRegistry, FileUpload $fileUpload, FileInfo $fileInfo, Environment $twig)
+    public function __construct(ManagerRegistry $managerRegistry, FileUploadService $fileUpload, FileInfoExtension $fileInfo, Environment $twig)
     {
         $this->managerRegistry = $managerRegistry;
         $this->fileUpload = $fileUpload;

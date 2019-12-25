@@ -35,7 +35,8 @@
         "symfony/test-pack": "*"
     },
     "suggest": {
-        "ext-gd": "If you want to use the image resizing functions"
+        "ext-gd": "If you want to use the image resizing functions",
+        "ext-fileinfo": "If you want to use the file information functions"
     },
     "config": {
         "sort-packages": true
