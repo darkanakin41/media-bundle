@@ -53,10 +53,9 @@ class ResizeImageService
             $finalDimensions = $this->getFinalDimensions($file, $settings['width'], $settings['height'], $settings['resize']);
             $newFile = $this->resizeTo($file, $originalDimensions['width'], $originalDimensions['height'], $finalDimensions['width'], $finalDimensions['height']);
 
-
             $resizeFileName = str_ireplace(sprintf('.%s', $extension), sprintf('-%s.%s', $format, $extension), $filename);
 
-            $this->saveImage($newFile, $resizeFileName, $settings['quality']);
+            $this->saveImage($newFile, $extension, $resizeFileName, $settings['quality']);
         }
 
     }
@@ -71,21 +70,23 @@ class ResizeImageService
      */
     public function getResource(string $filename)
     {
-        $size = getimagesize($filename);
+        $size = @getimagesize($filename);
+        $resource = null;
         switch ($size['mime']) {
             case 'image/jpg':
             case 'image/jpeg':
-                return imagecreatefromjpeg($filename);
+                $resource = imagecreatefromjpeg($filename);
                 break;
             case 'image/gif':
-                return @imagecreatefromgif($filename);
+                $resource = @imagecreatefromgif($filename);
                 break;
             case 'image/png':
-                return @imagecreatefrompng($filename);
+                $resource = @imagecreatefrompng($filename);
                 break;
             default:
-                throw new Exception('File is not an image, please use another file type.', 1);
+                throw new Exception("Unknown file type");
         }
+        return $resource;
     }
 
     /**
@@ -147,8 +148,8 @@ class ResizeImageService
         }
 
         return [
-            'height' => $finalHeight,
             'width' => $finalWidth,
+            'height' => $finalHeight,
         ];
     }
 
@@ -204,26 +205,27 @@ class ResizeImageService
      * Save the image as the image type the original image was.
      *
      * @param resource $file the image to save
+     * @param string   $extension The mime type
      * @param string   $savePath The path to store the new image
      * @param int      $imageQuality the quality to save it to
      */
-    public function saveImage($file, $savePath, $imageQuality = 100)
+    public function saveImage($file, $extension, $savePath, $imageQuality = 100)
     {
-        switch ($this->ext) {
-            case 'image/jpg':
-            case 'image/jpeg':
+        switch (strtolower($extension)) {
+            case 'jpg':
+            case 'jpeg':
                 // Check PHP supports this file type
                 if (imagetypes() & IMG_JPG) {
                     imagejpeg($file, $savePath, $imageQuality);
                 }
                 break;
-            case 'image/gif':
+            case 'gif':
                 // Check PHP supports this file type
                 if (imagetypes() & IMG_GIF) {
                     imagegif($file, $savePath);
                 }
                 break;
-            case 'image/png':
+            case 'png':
                 $invertScaleQuality = 9 - round(($imageQuality / 100) * 9);
                 // Check PHP supports this file type
                 if (imagetypes() & IMG_PNG) {
