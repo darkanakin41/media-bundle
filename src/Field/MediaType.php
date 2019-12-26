@@ -6,9 +6,10 @@
 
 namespace Darkanakin41\MediaBundle\Field;
 
-use Darkanakin41\MediaBundle\Model\File;
+use Darkanakin41\MediaBundle\DependencyInjection\Darkanakin41MediaExtension;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
@@ -17,11 +18,22 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class MediaType extends AbstractType
 {
+
+    /**
+     * @var array
+     */
+    private $bundleConfiguration;
+
+    public function __construct(ParameterBagInterface $parameterBag)
+    {
+        $this->bundleConfiguration = $parameterBag->get(Darkanakin41MediaExtension::CONFIG_KEY);
+    }
+
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
             'category' => 'all',
-            'class' => File::class,
+            'class' => $this->bundleConfiguration['file_class'],
             'choice_label' => 'filename',
         ));
     }

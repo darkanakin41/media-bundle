@@ -2,31 +2,32 @@ darkanakin41_media:
     base_folder: '%kernel.project_dir%/../../../build/'
     storage_folder: 'media/'
     resize: true
+    file_class: "AppTestBundle\\Entity\\File"
     image_formats:
         banner:
             large:
                 width: 1200
                 height: 600
-                min-width: 800
+                min_width: 800
                 resize: 'exact'
                 quality: 100
             normal:
                 width: 880
                 height: 440
-                min-width: 400
+                min_width: 400
                 resize: 'exact'
                 quality: 90
             small:
                 width: 440
                 height: 220
-                min-width: 0
+                min_width: 0
                 resize: 'exact'
                 quality: 90
         avatar:
             small:
                 width: 180
                 height: 200
-                min-width: 0
+                min_width: 0
                 resize: 'exact'
                 quality: 90
     categories:

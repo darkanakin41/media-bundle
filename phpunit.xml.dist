@@ -18,7 +18,9 @@
         <whitelist>
             <directory>./src</directory>
             <exclude>
+                <file>./src/Darkanakin41MediaBundle.php</file>
                 <directory>./src/Resources</directory>
+                <directory>./src/DependencyInjection</directory>
             </exclude>
         </whitelist>
     </filter>

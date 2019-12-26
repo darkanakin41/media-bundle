@@ -28,8 +28,6 @@ class FileUploadService
 
     /**
      * FileUpload constructor.
-     *
-     * @param string $rootFolder
      */
     public function __construct(ParameterBagInterface $parameterBag, ResizeImageService $resizeImage)
     {
@@ -56,26 +54,57 @@ class FileUploadService
 
         $folder = sprintf('%s%s/%s/%s/', $this->getTargetFolder(), $category, $now->format('Y'), $now->format('m'));
 
+        $mimeType = $file->getMimeType();
         $file->move($folder, $fileName);
 
         if ($this->isResizeEnabled()) {
-            $this->resize($file->getMimeType(), $name, $category, $fileName, $extension);
+            $this->resize($mimeType, $category, $folder, $fileName);
         }
 
         return $this->calculatePath($folder.$fileName, self::PATH_RELATIVE);
     }
 
-    public function getTargetFolder()
+    /**
+     * Get the base folder for web part.
+     *
+     * @return string
+     */
+    public function getBaseFolder()
     {
-        return $this->config['base_folder'].$this->config['storage_folder'];
+        return $this->config['base_folder'];
     }
 
+    /**
+     * Get the folder in which the upload must happen.
+     *
+     * @return string
+     */
+    public function getTargetFolder()
+    {
+        return $this->getBaseFolder().$this->config['storage_folder'];
+    }
+
+    /**
+     * Check if the resize function is enabled.
+     *
+     * @return bool
+     */
     public function isResizeEnabled()
     {
         return $this->config['resize'];
     }
 
-    public function resize(string $mimeType, $name, $category, $folder, $filename, $extension)
+    /**
+     * Resize the given file.
+     *
+     * @param string $mimeType the mimeType of the file
+     * @param string $category
+     * @param string $folder
+     * @param string $filename
+     *
+     * @throws \Exception
+     */
+    public function resize(string $mimeType, $category, $folder, $filename)
     {
         if (!in_array($mimeType, array('image/jpg', 'image/jpeg', 'image/gif', 'image/png'))) {
             return;
@@ -84,75 +113,44 @@ class FileUploadService
             return;
         }
 
-        try {
-            $this->resizeImage->process($folder.$filename, $extension, $category);
-            foreach ($this->config['image_formats'][$category] as $key => $values) {
-                $quality = 90;
-                if (isset($values['quality'])) {
-                    $quality = $values['quality'];
-                }
-                $resizer->resizeTo($values['width'], $values['height'], $values['resize']);
-                $resizeFileName = sprintf('%s-%s-%s.%s', Slugify::process($name), time(), $key, $extension);
-
-                $resizer->saveImage($folder.DIRECTORY_SEPARATOR.$resizeFileName, $quality);
-            }
-        } catch (\Exception $e) {
-        }
+        $this->resizeImage->process($folder.$filename, $category);
     }
 
+    /**
+     * Calculate the path based on the selected type.
+     *
+     * @param string $path     the path to process
+     * @param string $pathType the type of path (PATH_RELATIVE or PATH_ABSOLUTE)
+     *
+     * @return string
+     */
     public function calculatePath($path, $pathType)
     {
-        if (self::PATH_RELATIVE === $pathType && 0 === stripos($path, $this->getRootFolder())) {
-            return str_ireplace($this->getRootFolder().'/public/', '', $path);
-        } elseif (self::PATH_ABSOLUTE === $pathType && false === stripos($path, $this->getRootFolder())) {
-            return $this->getRootFolder().'/public/'.$path;
+        if (self::PATH_RELATIVE === $pathType && 0 === stripos($path, $this->getBaseFolder())) {
+            return str_ireplace($this->getBaseFolder(), '', $path);
+        } elseif (self::PATH_ABSOLUTE === $pathType && false === stripos($path, $this->getBaseFolder())) {
+            return $this->getBaseFolder().$path;
         }
 
         return $path;
     }
 
-    public function delete(File $file)
+    /**
+     * Delete the given File.
+     *
+     * @param string $filepath the path to the file to remove
+     * @param string $category the category of the file
+     */
+    public function delete($filepath, $category)
     {
-        $path = $file->getFilepath();
+        $path = $this->calculatePath($filepath, self::PATH_ABSOLUTE);
+        $otherFiles = $this->resizeImage->getResizedFiles($path, $category);
 
-        $otherFiles = $this->getOtherFiles($file);
         foreach ($otherFiles as $tmp) {
             @unlink($this->calculatePath($tmp['path'], self::PATH_ABSOLUTE));
         }
-        @unlink($this->calculatePath($path, self::PATH_ABSOLUTE));
+        @unlink($path);
     }
-
-    /**
-     * Get other versions of the file if available
-     *
-     * @param File $file
-     *
-     * @return array
-     */
-    public function getOtherFiles(File $file)
-    {
-        $mimeType = $file->getFiletype();
-        $category = $file->getCategory();
-        $path = $file->getFilepath();
-
-        $retour = array();
-        if (in_array($mimeType, array('image/jpg', 'image/jpeg', 'image/gif', 'image/png')) && in_array($category, array_keys($this->config['image_formats']))) {
-            foreach ($this->config['image_formats'][$category] as $key => $values) {
-                $infoParts = pathinfo($path);
-                $resizedPath = str_ireplace('.'.$infoParts['extension'], sprintf('-%s.%s', $key, $infoParts['extension']), $path);
-                if (file_exists($this->calculatePath($resizedPath, self::PATH_ABSOLUTE))) {
-                    $data = array('path' => $resizedPath);
-                    if (isset($values['min_width'])) {
-                        $data += array('minWidth' => $values['min_width']);
-                    }
-                    $retour[$key] = $data;
-                }
-            }
-        }
-
-        return $retour;
-    }
-
 
     /**
      * Retrieve the version of the file if exist, otherwise, return the default one.
@@ -161,13 +159,34 @@ class FileUploadService
      *
      * @return string
      */
-    public function getVersion(File $file, $version)
+    public function getVersion($filepath, $category, $version)
     {
-        $versions = $this->getOtherFiles($file);
-        if (in_array($version, array_keys($versions))) {
+        $versions = $this->resizeImage->getResizedFiles($filepath, $category);
+
+        if (isset($versions[$version])) {
             return $versions[$version]['path'];
         }
 
-        return $file->getFilepath();
+        return $filepath;
+    }
+
+    /**
+     * Retrieve the version of the file if exist, otherwise, return the default one.
+     *
+     * @param string $filepath   the path of the original file
+     * @param string $category   the category of the file
+     * @param string $pathFormat the path format to output (default : PATH_RELATIVE)
+     *
+     * @return array
+     */
+    public function getOtherVersions($filepath, $category, $pathFormat = self::PATH_RELATIVE)
+    {
+        $versions = $this->resizeImage->getResizedFiles($this->calculatePath($filepath, self::PATH_ABSOLUTE), $category);
+
+        foreach (array_keys($versions) as $format) {
+            $versions[$format]['path'] = $this->calculatePath($versions[$format]['path'], $pathFormat);
+        }
+
+        return $versions;
     }
 }

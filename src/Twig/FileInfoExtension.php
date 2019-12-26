@@ -41,9 +41,7 @@ class FileInfoExtension extends AbstractExtension
     }
 
     /**
-     * Refresh filesystem information of the file
-     *
-     * @param File $file
+     * Refresh filesystem information of the file.
      */
     public function refresh(File $file)
     {
@@ -53,9 +51,7 @@ class FileInfoExtension extends AbstractExtension
     }
 
     /**
-     * Get the size of the file on the filesystem
-     *
-     * @param File $file
+     * Get the size of the file on the filesystem.
      *
      * @return false|int
      */
@@ -65,9 +61,7 @@ class FileInfoExtension extends AbstractExtension
     }
 
     /**
-     * Get the type of the file
-     *
-     * @param File $file
+     * Get the type of the file.
      *
      * @return mixed|string
      */
@@ -83,9 +77,7 @@ class FileInfoExtension extends AbstractExtension
     }
 
     /**
-     * Get the filesystem date of the file
-     *
-     * @param File $file
+     * Get the filesystem date of the file.
      *
      * @return \DateTime|false
      */
@@ -95,9 +87,7 @@ class FileInfoExtension extends AbstractExtension
     }
 
     /**
-     * Get the public URL of the file
-     *
-     * @param File $file
+     * Get the public URL of the file.
      *
      * @return mixed
      */
@@ -107,28 +97,24 @@ class FileInfoExtension extends AbstractExtension
     }
 
     /**
-     * Convert the File into an array of main data
-     *
-     * @param File $file
+     * Convert the File into an array of main data.
      *
      * @return array
      */
     public function toArray(File $file)
     {
-        return [
+        return array(
             'id' => $file->getId(),
             'filename' => $file->getFilename(),
             'filepath' => $this->getUrl($file),
             'filesize' => $file->getFilesize(),
             'filetype' => $file->getFiletype(),
             'dimensions' => $this->getImageDimensions($file),
-        ];
+        );
     }
 
     /**
-     * Retrieve the dimension of the image
-     *
-     * @param File $file
+     * Retrieve the dimension of the image.
      *
      * @return array [width, height]
      */
@@ -145,9 +131,7 @@ class FileInfoExtension extends AbstractExtension
     }
 
     /**
-     * Get the full path of the file on the server
-     *
-     * @param File $file
+     * Get the full path of the file on the server.
      *
      * @return string the full path
      */

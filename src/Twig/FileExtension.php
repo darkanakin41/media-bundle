@@ -72,7 +72,7 @@ class FileExtension extends AbstractExtension
             case 'image/gif':
             case 'image/png':
                 $template = $this->twig->load('@Darkanakin41Media/image.html.twig');
-                $vars['versions'] = $this->fileUpload->getOtherFiles($file);
+                $vars['versions'] = $this->fileUpload->getOtherVersions($file->getFilepath(), $file->getCategory());
                 break;
         }
         if (null !== $template) {
