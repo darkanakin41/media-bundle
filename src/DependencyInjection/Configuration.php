@@ -28,6 +28,7 @@ class Configuration implements ConfigurationInterface
         $rootNode->children()
             ->scalarNode('base_folder')->defaultValue('%kernel.project_dir%/public/')->end()
             ->scalarNode('storage_folder')->defaultValue('media/')->end()
+            ->scalarNode('file_class')->end()
             ->booleanNode('resize')->defaultValue(false)->end()
             ->arrayNode('image_formats')
                 ->arrayPrototype()
