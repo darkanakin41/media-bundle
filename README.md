@@ -1,6 +1,8 @@
 darkanakin41/media-bundle
 ===
 [![Actions Status](https://github.com/darkanakin41/media-bundle/workflows/Quality/badge.svg)](https://github.com/darkanakin41/media-bundle/actions)
+[![Total Downloads](https://poser.pugx.org/darkanakin41/media-bundle/downloads.svg)](https://packagist.org/packages/darkanakin41/media-bundle) 
+[![Latest Stable Version](https://poser.pugx.org/darkanakin41/media-bundle/v/stable.svg)](https://packagist.org/packages/darkanakin41/media-bundle)
 
 This is a bundle that I created in order to manage medias in a Symfony project.
 
